@@ -29,14 +29,9 @@ const titleClickHandler = function(event){
     /* [DONE] add class 'active' to the correct article */
     targetArticle.classList.add('active');
 
-    generateTitleLinks();
+  //  generateTitleLinks();
   }
   
-  const links = document.querySelectorAll('.titles a');
-  console.log('links : ',links)
-  for(let link of links){
-    link.addEventListener('click', titleClickHandler);
-  }
 
 const optArticleSelector = '.post',
 optTitleSelector = '.post-title',
@@ -67,8 +62,17 @@ function generateTitleLinks(){
     /* [DONE] insert link into titleList */
     //titleList.insertAdjacentHTML("beforeend",linkHTML);
     html += linkHTML;
+
   }  
   titleList.innerHTML = html;
+
+  const links = document.querySelectorAll('.titles a');
+  console.log('links : ',links)
+  for(let link of links){
+    link.addEventListener('click', titleClickHandler);
+  }
+
 }
+generateTitleLinks();
 
 }
