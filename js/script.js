@@ -34,9 +34,9 @@
   const optTitleSelector = '.post-title';
   const optTitleListSelector = '.titles';
   const optArticleTagsSelector = '.post-tags .list';
+  const optArticleAuthorSelector='.post-author';
 
   const generateTitleLinks = function(customSelector = '') {
-    console.log('art : ', optArticleSelector + customSelector);
     let html = '';
 
     /* [DONE] remove contents of titleList */
@@ -71,6 +71,27 @@
 
   };
 
+  const generateAuthors = function(){
+    /*DONE find all articles */
+    const articles = document.querySelectorAll('.posts article');
+
+    /* [DONE] for each article */
+    for (let article of articles){
+    /* [DONE] find author wrapper */
+      const ArticleAuthorSelector = article.querySelector(optArticleAuthorSelector);
+     
+      /* [DONE] get author from data-author attribute */
+      const author=article.getAttribute('data-author');
+      /* [DONE] generate inner html */
+      const html = 'by <a href="#'+ author + '">' + author + '</a>';
+      /* [DONE] insert html into the author wrapper */
+      ArticleAuthorSelector.innerHTML=html;
+          console.log('aas : ',ArticleAuthorSelector);
+      /* [DONE] END LOOP: for every article: */
+  }
+};  
+  
+
   const generateTags = function(){
   /*DONE find all articles */
     const articles = document.querySelectorAll('.posts article');
@@ -100,7 +121,7 @@
     }
   };
 
-  function tagClickHandler(event){
+  const tagClickHandler = function(event){
     /* [DONE] prevent default action for this event */
     event.preventDefault();
 
@@ -135,7 +156,7 @@
     generateTitleLinks('[data-tags~="' + tag + '"]');
   }
 
-  function addClickListenersToTags(){
+  const addClickListenersToTags = function(){
     /* [DONE] find all links to tags */
     const links = document.querySelectorAll('[href^="#tag-"]');
 
@@ -146,10 +167,12 @@
       link.addEventListener('click', tagClickHandler);
 
     /* [DONE] END LOOP: for each link */
+    }
   }
-}
 
   generateTags();
+
+  generateAuthors();
 
   addClickListenersToTags();
 
