@@ -36,6 +36,8 @@
   const optArticleTagsSelector = '.post-tags .list';
   const optArticleAuthorSelector= '.post-author';
   const optTagsListSelector = '.tags.list';
+  const optCloudClassCount = 5;
+  const optCloudClassPrefix = 'tag-size-';
 
   const generateTitleLinks = function(customSelector = '') {
     let html = '';
@@ -95,10 +97,18 @@
     let min=10;
     let max=0;
     for (const tag in tags){
-      if (tags[tag]<min) {min=tags[tag]};    
-      if (tags[tag]>max) {max=tags[tag]};    
+      if (tags[tag]<min) {min=tags[tag];}    
+      if (tags[tag]>max) {max=tags[tag];}    
     }
     return {'min' : min, 'max' : max};
+  };
+
+  const calculateTagClass = function (count, params){
+    const normalizedCount = count - params.min;
+    const normalizedMax = params.max - params.min;
+    const percentage = normalizedCount / normalizedMax;
+    const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+    return classNumber;
   }
 
   const generateTags = function(){
@@ -143,12 +153,16 @@
     let allTagsHTML = '';
 
     const tagsParams = calculateTagsParams(allTags);
-    console.log('tagsParams:', tagsParams)
 
     /* [NEW] START LOOP: for each tag in allTags: */
     for(let tag in allTags){
+      //<li><a href="#">design</a></li>
+      //calculateTagClass(allTags[tag], tagsParams)
+      const tagLinkHTML = '<li><a class="tag-size-' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + ' </a></li>';
+      console.log('tagLinkHTML:', tagLinkHTML);
       /* [NEW] generate code of a link and add it to allTagsHTML */
-      allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+      //allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+      allTagsHTML += tagLinkHTML;
     }
     /* [NEW] END LOOP: for each tag in allTags: */
 
@@ -220,7 +234,6 @@
     for (let authorLink of authorLinks){
       /* [DONE] add class active */
       authorLink.classList.add('active');
-      console.log('al : ',authorLink);
       /* [DONE] END LOOP: for each found tag link */
     }
     /* [DONE] execute function "generateTitleLinks" with article selector as argument */
