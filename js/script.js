@@ -1,7 +1,8 @@
 {
   const templates = {
     articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML)
+    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
   };  
   const optArticleSelector = '.posts article';
   const optTitleSelector = '.post-title';
@@ -111,7 +112,9 @@
       /* [DONE] find author wrapper */
       const ArticleAuthorSelector = article.querySelector(optArticleAuthorSelector);
       /* [DONE] generate inner html */
-      const html = 'by <a href="#' + author + '">' + author + '</a>';
+      // const html = 'by <a href="#' + author + '">' + author + '</a>';
+      const linkHTMLData = {authorH: author};
+      const html = templates.authorLink(linkHTMLData);
       /* [DONE] insert html into the author wrapper */
       ArticleAuthorSelector.innerHTML = html;
 
