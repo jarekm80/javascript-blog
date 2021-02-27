@@ -1,6 +1,7 @@
 {
   const templates = {
-    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML)
   };  
   const optArticleSelector = '.posts article';
   const optTitleSelector = '.post-title';
@@ -75,7 +76,6 @@
     for (let link of links){
       link.addEventListener('click', titleClickHandler);
     }
-
   };
 
   const calculateMinMax = function(tags){
@@ -157,7 +157,9 @@
       /* [DONE] START LOOP: for each tag */
       for (let tag of tags){
       /* [DONE] generate HTML of the link */
-        const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      // const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+        const linkHTMLData = {tagH: tag};
+        const linkHTML = templates.tagLink(linkHTMLData);
         /* [DONE] add generated code to html variable */
         html += linkHTML;
         
